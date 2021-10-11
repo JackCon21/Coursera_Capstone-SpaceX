@@ -84,32 +84,37 @@ def get_pie_chart(entered_site):
     Input(component_id='payload-slider', component_property='value')]
 )
 def get_scatter_plot(site, mass):
-    filtered_df = spacex_df
+    filtered_df = spacex_df[spacex_df['Payload Mass (kg)'].between(mass[0],mass[1])]
     if site == 'ALL':
-        fig = px.scatter(spacex_df, 
+        fig = px.scatter(filtered_df, 
                         x='Payload Mass (kg)', 
                         y='class', 
-                        color='Booster Version Category')
+                        color='Booster Version Category',
+                        title='Correlation between Payload and Success for all Sites')
     elif site == 'Site1':
         fig = px.scatter(filtered_df[filtered_df['Launch Site'] == 'CCAFS LC-40'],
                         x='Payload Mass (kg)',
                         y='class',
-                        color='Booster Version Category')
+                        color='Booster Version Category',
+                        title='Correlation between Payload and Success for site CCAFS LC-40')
     elif site == 'Site2':
         fig = px.scatter(filtered_df[filtered_df['Launch Site'] == 'VAFB SLC-4E'],
                         x='Payload Mass (kg)',
                         y='class',
-                        color='Booster Version Category')
+                        color='Booster Version Category',
+                        title='Correlation between Payload and Success for site VAFB SLC-4E')
     elif site == 'Site3':
         fig = px.scatter(filtered_df[filtered_df['Launch Site'] == 'KSC LC-39A'],
                         x='Payload Mass (kg)',
                         y='class',
-                        color='Booster Version Category')
+                        color='Booster Version Category',
+                        title='Correlation between Payload and Success for site KSC SLC-39A')
     else:
         fig = px.scatter(filtered_df[filtered_df['Launch Site'] == 'CCAFS SLC-40'],
                         x='Payload Mass (kg)',
                         y='class',
-                        color='Booster Version Category')
+                        color='Booster Version Category',
+                        title='Correlation between Payload and Success for site CCAFS SLC-40')
     return fig
 
 # Run the app
